@@ -5,17 +5,17 @@ WeatherStatistics::WeatherStatistics(){
 }
 
 void WeatherStatistics::loadData(){
+  cout << "Importing data";
   for(int year = 2012; year <= 2015; year++){
     //runs loop over years.
     //File name differs only with years
-
+    cout << ".";
     //create a string stream to synthesize the file name
     ostringstream fNameStream;
     fNameStream << RESOURCE_PATH << "Environmental_Data_Deep_Moor_" << year << ".txt";
     string fName = fNameStream.str(); //create the string from the stream
     fstream filestream;
     filestream.open(fName); //open the file for reading
-    cout << "Imported:" << fName << endl;
     string line;
     getline(filestream, line); //skip the 1st line i.e the header
     while(getline(filestream, line)){
@@ -29,6 +29,8 @@ void WeatherStatistics::loadData(){
       m_timeToPressure[dateTime] = Barometric_Press;
     }
   }
+  cout << endl;
+  cout << "Data Imported" << endl;
 }
 
 time_t WeatherStatistics::convertDateTime(string date, string time){
@@ -75,4 +77,17 @@ double WeatherStatistics::computeCoefficient(string sDate, string sTime, string 
   double pressDiff = endIter->second - stIter->second;
 
   return (pressDiff / timeDiff);
+  }
+
+  bool WeatherStatistics::isDateTimeValid(std::string iDate, std::string iTime){
+    time_t t, d_start, d_end;
+    t = convertDateTime(iDate, iTime);
+    if(t < 0) return false;
+    //get the start and end time values of the data map
+    d_start = m_timeToPressure.begin()->first;
+    d_end = m_timeToPressure.rbegin()->first;
+
+    if(t < d_start || t > d_end) return false;
+
+    return true;
   }
