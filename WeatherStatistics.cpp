@@ -55,3 +55,24 @@ time_t WeatherStatistics::convertDateTime(string date, string time){
 
   return mktime(&dt);
 }
+
+double WeatherStatistics::computeCoefficient(string sDate, string sTime, string eDate, string eTime){
+
+  //compute start and end times
+  time_t start, end;
+  start = convertDateTime(sDate, sTime);
+  end = convertDateTime(eDate, eTime);
+
+  //pull information from map
+  //get iterators for times
+  map<time_t, double>::iterator stIter;
+  map<time_t, double>::iterator endIter;
+
+  stIter = m_timeToPressure.lower_bound(start);
+  endIter = m_timeToPressure.lower_bound(end);
+
+  double timeDiff = endIter->first - stIter->first;
+  double pressDiff = endIter->second - stIter->second;
+
+  return (pressDiff / timeDiff);
+  }

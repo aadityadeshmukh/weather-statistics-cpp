@@ -9,6 +9,7 @@
 class WeatherStatistics{
   public:
   WeatherStatistics();
+  double computeCoefficient(std::string sDate, std::string sTime, std::string eDate, std::string eTime);
   private:
     void loadData();
     time_t convertDateTime(std::string date, std::string time);
