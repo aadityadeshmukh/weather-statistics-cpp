@@ -25,6 +25,33 @@ void WeatherStatistics::loadData(){
       buffer >> date >> time >> Air_Temp >> Barometric_Press >> Dew_Point >> Relative_Humidity >> Wind_Dir >> Wind_Gust >> Wind_Speed; // pull the info from line buffer to variables.
 
       //create the time to pressure map
+      time_t dateTime = convertDateTime(date, time);
+      m_timeToPressure[dateTime] = Barometric_Press;
     }
   }
+}
+
+time_t WeatherStatistics::convertDateTime(string date, string time){
+  // work with date first
+  int yyyy, mon, dd = 0;
+  if(sscanf(date.c_str(), "%d_%d_%d", &yyyy, &mon, &dd) != 3){
+    cerr << "Error with date calculations" << endl;
+    return -1;
+  }
+
+  int hh, mm, ss = 0;
+  if(sscanf(time.c_str(), "%d:%d:%d", &hh, &mm, &ss) != 3){
+        cerr << "Error with time calculations" << endl;
+        return -1;
+  }
+
+  struct tm dt = {};
+  dt.tm_year = yyyy - 1900;
+  dt.tm_mon = mon;
+  dt.tm_mday = dd;
+  dt.tm_hour = hh;
+  dt.tm_min = mm;
+  dt.tm_sec = ss;
+
+  return mktime(&dt);
 }

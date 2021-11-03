@@ -11,5 +11,6 @@ class WeatherStatistics{
   WeatherStatistics();
   private:
     void loadData();
+    time_t convertDateTime(std::string date, std::string time);
     std::map<time_t, double> m_timeToPressure;
 };
