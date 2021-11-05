@@ -18,6 +18,8 @@ You are provided with a weather data set of a specific location for 4 years. The
   Eg. clang: "clang++ -std=c++17 *.cpp -o main && ./main"
 3. Run main.exe
 
+
+
 ## Learning objectives:
 1. Reading large data from multiple files.
 2. Creating an appropriate data structure to access the data during runtime. 
