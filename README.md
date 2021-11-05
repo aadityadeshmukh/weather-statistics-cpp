@@ -19,6 +19,7 @@ You are provided with a weather data set of a specific location for 4 years. The
 3. Run main.exe
 
 
+![Screenshot](Screenshot.png)
 
 ## Learning objectives:
 1. Reading large data from multiple files.
